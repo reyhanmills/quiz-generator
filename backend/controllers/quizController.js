@@ -6,29 +6,36 @@ const testQuizRoute = (req, res) => {
   });
 };
 
-const generateQuiz = (req, res) => {
+const generateQuiz = async (req, res) => {
   try {
     const { topic, difficulty, questionCount } = req.body;
 
-    if (!topic) {
+    if (!topic || typeof topic !== "string" || topic.trim() === "") {
       return res.status(400).json({
-        error: "Topic is required"
+        error: "Topic is required and must be a non-empty text"
       });
     }
 
-    if (!difficulty) {
+    const allowedDifficulties = ["easy", "medium", "hard"];
+
+    if (!difficulty || !allowedDifficulties.includes(difficulty)) {
       return res.status(400).json({
-        error: "Difficulty is required"
+        error: "Difficulty must be one of: easy, medium, hard"
       });
     }
 
-    if (!questionCount) {
+    if (
+      !questionCount ||
+      typeof questionCount !== "number" ||
+      questionCount < 1 ||
+      questionCount > 10
+    ) {
       return res.status(400).json({
-        error: "Question count is required"
+        error: "Question count must be a number between 1 and 10"
       });
     }
 
-    const quiz = createQuiz(topic, difficulty, questionCount);
+    const quiz = await createQuiz(topic, difficulty, questionCount);
 
     res.json({
       message: "Quiz başarıyla oluşturuldu",

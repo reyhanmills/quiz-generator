@@ -1,4 +1,4 @@
-const createQuiz = (topic, difficulty, questionCount) => {
+const createQuiz = async(topic, difficulty, questionCount) => {
   return {
     topic,
     difficulty,
