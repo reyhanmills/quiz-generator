@@ -3,17 +3,28 @@ import { useState } from "react";
 
 function App() {
   const [topic, setTopic] = useState("");
+  const [difficulty, setDifficulty] = useState("easy");
+  const [questionCount, setQuestionCount] = useState(5);
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+    console.log({
+      topic,
+      difficulty,
+      questionCount
+    });
+  };
+
   return (
     <main className="app">
       <section className="quiz-container">
         <h1>Quiz Generator</h1>
         <p>Girilen konu: {topic}</p>
         <p>
-          Konu, zorluk ve soru sayısı seçerek quiz oluşturabileceğin eğitim aracı.
+          Seçilenler: {topic} - {difficulty} - {questionCount}
         </p>
 
         <div className="quiz-box">
-          <form className="quiz-form">
+          <form className="quiz-form" onSubmit={handleSubmit}>
             <label>
               Konu
               <input
@@ -28,7 +39,12 @@ function App() {
 
             <label>
               Zorluk
-              <select>
+              <select
+                value={difficulty}
+                onChange={(event) => {
+                  setDifficulty(event.target.value);
+
+                }}>
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
                 <option value="hard">Hard</option>
@@ -37,7 +53,16 @@ function App() {
 
             <label>
               Soru Sayısı
-              <input type="number" min="1" max="10" placeholder="5" />
+              <input
+                type="number"
+                min="1"
+                max="10"
+                placeholder="5"
+                value={questionCount}
+                onChange={(event) => {
+                  setQuestionCount(event.target.value);
+
+                }} />
             </label>
 
             <button type="submit">Quiz Oluştur</button>
