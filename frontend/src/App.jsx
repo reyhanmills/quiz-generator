@@ -5,13 +5,25 @@ function App() {
   const [topic, setTopic] = useState("");
   const [difficulty, setDifficulty] = useState("easy");
   const [questionCount, setQuestionCount] = useState(5);
-  const handleSubmit = (event) =>{
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({
-      topic,
-      difficulty,
-      questionCount
+
+    const response = await fetch("http://localhost:5001/api/quiz/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        topic,
+        difficulty,
+        questionCount
+      })
     });
+
+    const data = await response.json();
+
+    console.log(data);
   };
 
   return (
@@ -33,8 +45,8 @@ function App() {
                 value={topic}
                 onChange={(event) => {
                   setTopic(event.target.value);
-
-                }} />
+                }}
+              />
             </label>
 
             <label>
@@ -43,8 +55,8 @@ function App() {
                 value={difficulty}
                 onChange={(event) => {
                   setDifficulty(event.target.value);
-
-                }}>
+                }}
+              >
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
                 <option value="hard">Hard</option>
@@ -60,9 +72,9 @@ function App() {
                 placeholder="5"
                 value={questionCount}
                 onChange={(event) => {
-                  setQuestionCount(event.target.value);
-
-                }} />
+                  setQuestionCount(Number(event.target.value));
+                }}
+              />
             </label>
 
             <button type="submit">Quiz Oluştur</button>
