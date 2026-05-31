@@ -58,3 +58,27 @@ body {
   font-weight: 600;
   cursor: pointer;
 }
+.quiz-result {
+  margin-top: 24px;
+  text-align: left;
+}
+
+.question-card {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background-color: #f9fafb;
+}
+
+.question-card h3 {
+  margin-top: 0;
+}
+
+.question-card ul {
+  padding-left: 20px;
+}
+.quiz-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
