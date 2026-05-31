@@ -1,12 +1,14 @@
-import "./App.css";
 import { useState } from "react";
+import "./App.css";
 import QuizForm from "./components/QuizForm";
 import QuizResult from "./components/QuizResult";
 
 function App() {
+  const [subject, setSubject] = useState("Fen Bilimleri");
   const [topic, setTopic] = useState("");
-  const [difficulty, setDifficulty] = useState("easy");
+  const [difficulty, setDifficulty] = useState("Orta");
   const [questionCount, setQuestionCount] = useState(5);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [quiz, setQuiz] = useState(null);
@@ -18,24 +20,23 @@ function App() {
       setLoading(true);
       setError("");
 
-
-      const response = await fetch(
-        "http://localhost:5001/api/quiz/generate",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            topic,
-            difficulty,
-            questionCount
-          })
-        }
-      );
+      const response = await fetch("http://localhost:5001/api/quiz/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          subject,
+          topic,
+          difficulty,
+          questionCount
+        })
+      });
 
       const data = await response.json();
 
+      console.log(data);
+      setQuiz(data.quiz);
 
     } catch (err) {
       setError("Quiz oluşturulurken bir hata oluştu.");
@@ -47,17 +48,24 @@ function App() {
   return (
     <main className="app">
       <section className="quiz-container">
-        <h1>Quiz Generator</h1>
-        <p>Girilen konu: {topic}</p>
+        <h1>LGS Quiz Generator</h1>
+
         <p>
-          Seçilenler: {topic} - {difficulty} - {questionCount}
+          Ders, konu, zorluk ve soru sayısı seçerek LGS odaklı quiz oluştur.
         </p>
+
+        <p>
+          Seçilenler: {subject} - {topic} - {difficulty} - {questionCount}
+        </p>
+
         {loading && <p>Quiz oluşturuluyor...</p>}
 
         {error && <p>{error}</p>}
 
         <div className="quiz-box">
           <QuizForm
+            subject={subject}
+            setSubject={setSubject}
             topic={topic}
             setTopic={setTopic}
             difficulty={difficulty}
@@ -67,6 +75,7 @@ function App() {
             handleSubmit={handleSubmit}
             loading={loading}
           />
+
           <QuizResult quiz={quiz} />
         </div>
       </section>

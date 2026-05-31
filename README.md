@@ -149,4 +149,3 @@ Bu proje geliştirilirken aşağıdaki konular üzerine odaklanılmaktadır:
 
 ```
 ```
-

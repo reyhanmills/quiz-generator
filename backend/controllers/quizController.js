@@ -8,7 +8,13 @@ const testQuizRoute = (req, res) => {
 
 const generateQuiz = async (req, res) => {
   try {
-    const { topic, difficulty, questionCount } = req.body;
+    const { subject, topic, difficulty, questionCount } = req.body;
+
+    if (!subject || typeof subject !== "string") {
+      return res.status(400).json({
+        error: "Subject is required"
+      });
+    }
 
     if (!topic || typeof topic !== "string" || topic.trim() === "") {
       return res.status(400).json({
@@ -16,7 +22,7 @@ const generateQuiz = async (req, res) => {
       });
     }
 
-    const allowedDifficulties = ["easy", "medium", "hard"];
+    const allowedDifficulties = ["Kolay", "Orta", "Yeni Nesil"];
 
     if (!difficulty || !allowedDifficulties.includes(difficulty)) {
       return res.status(400).json({
@@ -35,7 +41,7 @@ const generateQuiz = async (req, res) => {
       });
     }
 
-    const quiz = await createQuiz(topic, difficulty, questionCount);
+    const quiz = await createQuiz(subject, topic, difficulty, questionCount);
 
     res.json({
       message: "Quiz başarıyla oluşturuldu",

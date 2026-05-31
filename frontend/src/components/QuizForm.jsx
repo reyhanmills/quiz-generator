@@ -1,4 +1,6 @@
 function QuizForm({
+    subject,
+    setSubject,
     topic,
     setTopic,
     difficulty,
@@ -11,10 +13,27 @@ function QuizForm({
     return (
         <form className="quiz-form" onSubmit={handleSubmit}>
             <label>
+                Ders
+                <select
+                    value={subject}
+                    onChange={(event) => {
+                        setSubject(event.target.value);
+                    }}
+                >
+                    <option value="Türkçe">Türkçe</option>
+                    <option value="Matematik">Matematik</option>
+                    <option value="Fen Bilimleri">Fen Bilimleri</option>
+                    <option value="İnkılap Tarihi">İnkılap Tarihi</option>
+                    <option value="Din Kültürü">Din Kültürü</option>
+                    <option value="İngilizce">İngilizce</option>
+                </select>
+            </label>
+
+            <label>
                 Konu
                 <input
                     type="text"
-                    placeholder="Örn: Fotosentez"
+                    placeholder="Örn: Fotosentez, Paragraf, Denklem..."
                     value={topic}
                     onChange={(event) => {
                         setTopic(event.target.value);
@@ -30,9 +49,9 @@ function QuizForm({
                         setDifficulty(event.target.value);
                     }}
                 >
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
+                    <option value="kolay">Kolay</option>
+                    <option value="orta">Orta</option>
+                    <option value="Yeni Nesil">Yeni Nesil</option>
                 </select>
             </label>
 
@@ -55,4 +74,5 @@ function QuizForm({
         </form>
     );
 }
+
 export default QuizForm;
