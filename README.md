@@ -7,7 +7,7 @@ Kullanıcıların seçtikleri konu, zorluk seviyesi ve soru tipine göre özel q
 ## Kullanılan Teknolojiler
 - Node.js
 - Express.js
-- React (planlanıyor)
+- React 
 - AI entegrasyonu (planlanıyor)
 
 ## Proje Durumu
