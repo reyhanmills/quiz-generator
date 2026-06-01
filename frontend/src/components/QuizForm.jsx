@@ -1,3 +1,66 @@
+const topicsBySubject = {
+    Türkçe: [
+        "Sözcükte ve Cümlede Anlam",
+        "Paragraf",
+        "Cümle Türleri",
+        "Fiilimsiler",
+        "Cümle Ögeleri",
+        "Yazım Kuralları",
+        "Noktalama İşaretleri",
+        "Metin Türleri",
+        "Sözel Mantık"
+    ],
+    Matematik: [
+        "Çarpanlar ve Katlar",
+        "Üslü İfadeler",
+        "Kareköklü İfadeler",
+        "Veri Analizi",
+        "Basit Olayların Olma Olasılığı",
+        "Cebirsel İfadeler ve Özdeşlikler",
+        "Doğrusal Denklemler",
+        "Eşitsizlikler",
+        "Geometrik Cisimler",
+        "Dönüşüm Geometrisi"
+    ],
+    "Fen Bilimleri": [
+        "Mevsimler ve İklim",
+        "DNA ve Genetik Kod",
+        "Basınç",
+        "Madde ve Endüstri",
+        "Basit Makineler",
+        "Enerji Dönüşümleri ve Çevre Bilimi",
+        "Elektrik Yükleri ve Elektrik Enerjisi"
+    ],
+    "İnkılap Tarihi": [
+        "Bir Kahraman Doğuyor",
+        "Milli Uyanış: Bağımsızlık Yolunda Adımlar",
+        "Milli Bir Destan: Ya İstiklal Ya Ölüm",
+        "Çağdaş Türkiye Yolunda Adımlar",
+        "Atatürkçülük",
+        "Türk Dış Politikası"
+    ],
+    "Din Kültürü": [
+        "Kader İnancı",
+        "Zekât ve Sadaka",
+        "Din ve Hayat",
+        "Hz. Muhammed’in Örnekliği",
+        "Kur'an-ı Kerim ve Özellikleri"
+    ],
+    İngilizce: [
+        "Friendship",
+        "Teen Life",
+        "In the Kitchen",
+        "On the Phone",
+        "The Internet",
+        "Adventures",
+        "Tourism",
+        "Chores",
+        "Science",
+        "Natural Forces"
+    ]
+};
+
+
 function QuizForm({
     subject,
     setSubject,
@@ -10,6 +73,9 @@ function QuizForm({
     handleSubmit,
     loading
 }) {
+
+
+    const topicOptions = topicsBySubject[subject] || [];
     return (
         <form className="quiz-form" onSubmit={handleSubmit}>
             <label>
@@ -17,7 +83,9 @@ function QuizForm({
                 <select
                     value={subject}
                     onChange={(event) => {
-                        setSubject(event.target.value);
+                        const selectedSubject = event.target.value;
+                        setSubject(selectedSubject);
+                        setTopic(topicsBySubject[selectedSubject][0]);
                     }}
                 >
                     <option value="Türkçe">Türkçe</option>
@@ -31,14 +99,18 @@ function QuizForm({
 
             <label>
                 Konu
-                <input
-                    type="text"
-                    placeholder="Örn: Fotosentez, Paragraf, Denklem..."
+                <select
                     value={topic}
                     onChange={(event) => {
                         setTopic(event.target.value);
                     }}
-                />
+                >
+                    {topicOptions.map((topicOption) => (
+                        <option key={topicOption} value={topicOption}>
+                            {topicOption}
+                        </option>
+                    ))}
+                </select>
             </label>
 
             <label>

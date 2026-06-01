@@ -5,7 +5,7 @@ import QuizResult from "./components/QuizResult";
 
 function App() {
   const [subject, setSubject] = useState("Fen Bilimleri");
-  const [topic, setTopic] = useState("");
+  const [topic, setTopic] = useState("Mevsimler ve İklim");
   const [difficulty, setDifficulty] = useState("Orta");
   const [questionCount, setQuestionCount] = useState(5);
 

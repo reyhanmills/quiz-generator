@@ -9,13 +9,15 @@ function QuizResult({ quiz }) {
 
       {quiz.questions.map((questionItem, index) => (
         <div className="question-card" key={index}>
-          <h3>{questionItem.question}</h3>
+          <p>{questionItem.question}</p>
 
-          <ul>
+          <div className="options-list">
             {questionItem.options.map((option, optionIndex) => (
-              <li key={optionIndex}>{option}</li>
+              <p key={optionIndex} className="option-item">
+                {option}
+              </p>
             ))}
-          </ul>
+          </div>
 
           <p>
             <strong>Doğru Cevap:</strong> {questionItem.correctAnswer}
