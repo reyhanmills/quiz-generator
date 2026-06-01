@@ -36,6 +36,9 @@ Kurallar:
 -Sorularda görsel, tablo, grafik, sayı doğrusu veya “aşağıdaki şekle göre” gibi ifadeler kullanma.
 -Her soru yalnızca metin üzerinden tamamen anlaşılabilir olmalı.
 -Eğer tablo/grafik/sayı doğrusu gerekiyorsa bunu metinle açıkça tarif et.
+- options dizisindeki seçeneklerin başına A), B), C), D) gibi harfler koyma.
+- options sadece seçenek metinlerinden oluşsun.
+- correctAnswer değeri de harfsiz şekilde options içindeki doğru seçenek metniyle birebir aynı olsun.
 
 JSON formatı:
 
@@ -44,12 +47,12 @@ JSON formatı:
     {
       "question": "Soru metni",
       "options": [
-        "A seçeneği",
-        "B seçeneği",
-        "C seçeneği",
-        "D seçeneği"
+        "Devletçilik ve Laiklik",
+        "Halkçılık ve İnkılapçılık",
+        "Cumhuriyetçilik ve Milliyetçilik",
+        "Milliyetçilik ve Laiklik"
       ],
-      "correctAnswer": "Doğru seçenek"
+      "correctAnswer": "Cumhuriyetçilik ve Milliyetçilik"
     }
   ]
 }
@@ -77,6 +80,9 @@ JSON formatı:
   // AI'dan gelen questions alanını alıyoruz
   const questions = parsedQuiz.questions;
 
+  const normalizeOptionText = (text) => {
+    return text.replace(/^[A-D]\)\s*/i, "").trim();
+  };
   // Questions gerçekten bir dizi mi kontrol ediyoruz
   // Çünkü bazen AI yanlış format döndürebilir
   if (!Array.isArray(questions)) {
@@ -94,8 +100,14 @@ JSON formatı:
     );
   }
 
+
+
   // Her soruyu tek tek kontrol ediyoruz
   questions.forEach((item, index) => {
+
+    item.options = item.options.map((option) => normalizeOptionText(option));
+
+    item.correctAnswer = normalizeOptionText(item.correctAnswer);
 
     // Soru metni var mı kontrol ediyoruz
     // Boş soru gelmesini engelliyoruz

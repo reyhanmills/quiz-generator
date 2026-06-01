@@ -14,7 +14,7 @@ function QuizResult({ quiz }) {
           <div className="options-list">
             {questionItem.options.map((option, optionIndex) => (
               <p key={optionIndex} className="option-item">
-                {option}
+                {String.fromCharCode(65 + optionIndex)}) {option}
               </p>
             ))}
           </div>
