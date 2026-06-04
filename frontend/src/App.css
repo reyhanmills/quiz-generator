@@ -89,3 +89,7 @@ body {
 .option-item {
   margin: 6px 0;
 }
+.question-card h3 {
+  margin-bottom: 8px;
+  color: #111827;
+}
